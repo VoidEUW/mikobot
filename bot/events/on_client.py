@@ -41,7 +41,7 @@ def listen(client: MikoBot) -> None:
     async def on_interaction(interaction: discord.Interaction) -> None:  # type: ignore
         if interaction.type == discord.InteractionType.application_command:
             log(
-                f"'{interaction.guild}': Slash Command '{interaction.data["name"]}' was executed by {interaction.user} in #{interaction.channel}."  # type: ignore
+                f"'{interaction.guild}': Slash Command '{interaction.data['name']}' was executed by {interaction.user} in #{interaction.channel}."  # type: ignore
             )
         elif interaction.type == discord.InteractionType.component:
             log("Component interaction received")
