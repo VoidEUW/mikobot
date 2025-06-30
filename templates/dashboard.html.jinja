@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+
+    <title>Miko Dashboard</title>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico" />
+
+    <link rel="stylesheet" href="/static/styles/pico.violet.min.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/dashboard.css') }}" />
+</head>
+
+<body style="height: 100vh background: #f0f0f0;">
+
+    <header class="container">
+        <nav class="container">
+            <ul>
+                <li>
+                    <img src="{{ url_for('static', filename='assets/users/' + 'generic.jpg') }}"
+                        alt="Miko Logo" style="width: 50px; height: 50px; border-radius: 50%;">
+                </li>
+                <li>Welcome {{ user.username }}!</li>
+            </ul>
+            <ul>
+                <li><a href="/dashboard">Home</a></li>
+                <li><a href="/dashboard/users">Users</a></li>
+                <li><a href="/dashboard/tokens">Tokens</a></li>
+                <li><a href="/dashboard/email">Email</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        <article style="display: flex; justify-content: start; align-items: center; margin-bottom: 20px; height: 100px;">
+            <button onclick="startBot()" class="secondary" style="margin-right: 10px;">
+                Start
+            </button>
+            <button onclick="stopBot()" class="secondary">
+                Stop
+            </button>
+            <!-- FIXME Bot status disappears after reload -->
+            <pre id="start-status" style="align-items: center; margin: 30px; font-size: small"></pre>
+        </article>
+        <article>
+            <!-- FIXME Bot logs disappears after reload, should disappear on stop -->
+            <pre id="terminal" class="terminal"></pre>
+        </article>
+    </main>
+</body>
+
+<script src="https://cdn.socket.io/4.6.1/socket.io.min.js"></script>
+<script>
+    function startBot() {
+        fetch('/api/v1/bot/status/start', { method: 'GET' })
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById('start-status').textContent =
+                    `Bot Status: ${data.status}, PID: ${data.pid ?? 'N/A'}`;
+            })
+            .catch(err => {
+                console.error(err);
+                document.getElementById('start-status').textContent = "Fehler beim Starten des Bots";
+            });
+    }
+
+    function stopBot() {
+        fetch('/api/v1/bot/status/stop', { method: 'GET' })
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById('start-status').textContent =
+                    `Bot Status: ${data.status}, PID: -`;
+            })
+            .catch(err => {
+                console.error(err);
+                document.getElementById('start-status').textContent = "Fehler beim Stoppen des Bots";
+            });
+    }
+</script>
+<script>
+    const socket = io();
+    const terminal = document.getElementById('terminal');
+
+    // check if the user is admin -> display debug (unless user hides debug)
+    socket.on('terminal_output', (msg) => {
+        const line = `${msg.time} [${msg.type.toUpperCase()}] ${msg.message}\n`;
+        terminal.textContent += line;
+        terminal.scrollTop = terminal.scrollHeight;
+    });
+</script>
+
+</html>

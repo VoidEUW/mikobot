@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+
+    <title>Miko Dashboard</title>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico" />
+
+    <link rel="stylesheet" href="/static/styles/pico.violet.min.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/dashboard.css') }}" />
+</head>
+
+<body style="height: 100vh background: #f0f0f0;">
+
+    <header class="container">
+        <nav class="container">
+            <ul>
+                <li>
+                    <img src="{{ url_for('static', filename='assets/users/' + 'generic.jpg') }}" alt="Miko Logo"
+                        style="width: 50px; height: 50px; border-radius: 50%;">
+                </li>
+                <li>Welcome {{ user.username }}!</li>
+            </ul>
+            <ul>
+                <li><a href="/dashboard">Home</a></li>
+                <li><a href="/dashboard/users">Users</a></li>
+                <li><a href="/dashboard/tokens">Tokens</a></li>
+                <li><a href="/dashboard/email">Email</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        <article>
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Username</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Permissions</th>
+                        <th scope="col">Edit</th>
+                        <th scope="col">Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user_entry in users %}
+                    <tr>
+                        <td>{{ user_entry.id }}</td>
+                        <td>{{ user_entry.username }}</td>
+                        <td>{{ user_entry.email }}</td>
+                        <td>{{ user_entry.permissions }}</td>
+                        <td>
+                            <a href="" class="secondary">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M12 20h9"></path>
+                                    <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"></path>
+                                </svg>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="" class="secondary">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M3 6h18"></path>
+                                    <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+                                    <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+                                </svg>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </article>
+    </main>
+</body>
+
+<script src="https://cdn.socket.io/4.6.1/socket.io.min.js"></script>
+
+</html>

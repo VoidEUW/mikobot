@@ -1,0 +1,8 @@
+discord
+python-dotenv
+requests
+flask
+flask-cors
+flask-httpauth
+flask-socketio
+waitress

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico" />
+    <link rel="stylesheet" href="/static/styles/pico.violet.min.css" />
+    <title>Miko Login</title>
+</head>
+
+<body style="display: flex; height: 100vh">
+    <main class="container" style="
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+      ">
+        <article style="
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+          max-width: 500px;
+          padding: 2rem;
+        ">
+            <h1 style="text-align: center">Login</h1>
+            <p style="text-align: justify">
+                Please enter your credentials to access the Miko Dashboard.
+            </p>
+            <form method="POST" action="/login">
+                <label for="username">Username </label>
+                <input type="text" id="username" name="username" required />
+
+                <label for="password">Password </label>
+                <input type="password" id="password" name="password" required />
+
+                <div style="display: flex; justify-content: center">
+                    {% if error %}
+                    <p style="text-align: center">
+                        <strong style="color: red; font-size: 0.7rem">{{error}}</strong>
+                    </p>
+                    {% endif %}
+                </div>
+
+                <button type="submit">Login</button>
+            </form>
+        </article>
+    </main>
+</body>
+
+</html>

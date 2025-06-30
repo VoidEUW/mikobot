@@ -14,7 +14,7 @@ logs
 
 api/assets
 api/users.json
-database/database.db
+database/data
 database/test.*
 
 # Ignore runtime files

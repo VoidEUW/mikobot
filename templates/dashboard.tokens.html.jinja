@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+
+    <title>Miko Dashboard</title>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico" />
+
+    <link rel="stylesheet" href="/static/styles/pico.violet.min.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/dashboard.css') }}" />
+</head>
+
+<body style="height: 100vh background: #f0f0f0;">
+
+    <header class="container">
+        <nav class="container">
+            <ul>
+                <li>
+                    <img src="{{ url_for('static', filename='assets/users/' + 'generic.jpg') }}" alt="Miko Logo"
+                        style="width: 50px; height: 50px; border-radius: 50%;">
+                </li>
+                <li>Welcome {{ user.username }}!</li>
+            </ul>
+            <ul>
+                <li><a href="/dashboard">Home</a></li>
+                <li><a href="/dashboard/users">Users</a></li>
+                <li><a href="/dashboard/tokens">Tokens</a></li>
+                <li><a href="/dashboard/email">Email</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        <article>
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Token</th>
+                        <th scope="col" style="width: 400px;">Value</th>
+                        <th scope="col">Edit</th>
+                        <th scope="col">Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for token in tokens %}
+                    <tr>
+                        <td>{{ token.id }}</td>
+                        <td>{{ token.purpose }}</td>
+                        <td style="display: flex; align-items: center; max-width: 400px;" onclick="">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 448 512"
+                                fill="currentColor" stroke="currentColor" stroke-width="0">
+                                <path
+                                    d="M208 0L332.1 0c12.7 0 24.9 5.1 33.9 14.1l67.9 67.9c9 9 14.1 21.2 14.1 33.9L448 336c0 26.5-21.5 48-48 48l-192 0c-26.5 0-48-21.5-48-48l0-288c0-26.5 21.5-48 48-48zM48 128l80 0 0 64-64 0 0 256 192 0 0-32 64 0 0 48c0 26.5-21.5 48-48 48L48 512c-26.5 0-48-21.5-48-48L0 176c0-26.5 21.5-48 48-48z">
+                                </path>
+                            </svg>
+                            <p
+                                style="padding-left: 10px; margin: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 300px;">
+                                {{ token.token }}
+                            </p>
+                        </td>
+                        <td>
+                            <a href="" class="secondary">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M12 20h9"></path>
+                                    <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"></path>
+                                </svg>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="" class="secondary">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M3 6h18"></path>
+                                    <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+                                    <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+                                </svg>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </article>
+    </main>
+</body>
+
+<script src="https://cdn.socket.io/4.6.1/socket.io.min.js"></script>
+
+</html>

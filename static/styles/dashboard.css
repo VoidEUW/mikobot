@@ -1,0 +1,8 @@
+.terminal {
+    height: 300px;
+    padding: 15px;
+    background: black;
+    color: white;
+    overflow: auto;
+    overflow: scroll;
+}
