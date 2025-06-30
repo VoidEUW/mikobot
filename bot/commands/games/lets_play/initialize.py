@@ -50,7 +50,7 @@ class MikoLetsPlayView(discord.ui.View):
     async def create_embed(self) -> discord.Embed:
         embed = discord.Embed(
             title="",
-            description=f"# Lets play {self.game["title"]}\nJoining will instantly move you into the created Voice-Channel!",
+            description=f'# Lets play {self.game["title"]}\nJoining will instantly move you into the created Voice-Channel!',
         )
 
         for status in self.status_list:
