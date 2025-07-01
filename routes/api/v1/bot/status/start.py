@@ -15,7 +15,7 @@ def handle_start(
     """Handle the start command"""
     with lock:
         if (bot_process is None) or (bot_process.poll() is not None):
-            bot_process = subprocess.Popen(["python3", "-m", "bot", BOT_TOKEN, API_TOKEN, str(PORT)])
+            bot_process = subprocess.Popen(["poetry", "run", "python", "-m", "bot", BOT_TOKEN, API_TOKEN, str(PORT)])
             with open("api/bot.pid", "w") as f:
                 f.write(str(bot_process.pid))
             socket.emit("terminal_output", { # type: ignore

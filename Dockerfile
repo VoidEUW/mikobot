@@ -1,12 +1,18 @@
-FROM python:3.13-rc-slim
+FROM python:3.13-slim
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential gcc curl libffi-dev libpq-dev libssl-dev \
+    curl gcc build-essential libffi-dev libpq-dev libssl-dev pipx \
     && rm -rf /var/lib/apt/lists/*
+
+RUN pipx install poetry
+ENV PATH="/root/.local/bin:$PATH"
+
 WORKDIR /app
 
-COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
+COPY pyproject.toml poetry.lock* ./
+
+ENV POETRY_VIRTUALENVS_IN_PROJECT=true
+RUN poetry install --no-root --only main
 
 COPY api ./api
 COPY routes ./routes
@@ -18,6 +24,7 @@ COPY config.py ./
 COPY init.py ./
 COPY extensions.py ./
 RUN mkdir ./database
+RUN mkdir ./database/data
 COPY database/connection ./database/connection
 COPY database/schema.sql ./database/schema.sql
 COPY database/data-setup.sql ./database/data-setup.sql
@@ -29,4 +36,4 @@ ENV FIRST_SETUP="true"
 
 EXPOSE 8080
 
-CMD ["python3", "main.py"]
+CMD ["poetry", "run", "python", "main.py"]
