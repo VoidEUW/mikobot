@@ -2,8 +2,10 @@
 
 import os
 
+import eventlet # type: ignore
+eventlet.monkey_patch() # type: ignore
+
 from flask_cors import CORS
-from waitress import serve
 
 from config import HOST, PORT, DEBUG 
 from extensions import socket
@@ -12,8 +14,12 @@ from init import create_database
 from init import cleanup
 from init import first_setup
 
+
 app = create_app()
-socket.init_app(app, cors_allowed_origins="*")  # type: ignore
+if os.getenv("DEPLOYMENT", "development") == "production":
+    socket.init_app(app, cors_allowed_origins="*", async_mode="eventlet")  # type: ignore
+else:
+    socket.init_app(app, cors_allowed_origins="*")
 CORS(app)
 
 
@@ -26,7 +32,4 @@ if __name__ == "__main__":
         print(f"INFO - Setup completed:   Username: {username} Password: {password}")
         os.environ["FIRST_SETUP"] = "false"
     print(f"INFO - Running on {HOST}:{PORT} in {os.getenv('DEPLOYMENT', 'development')} mode")
-    if os.getenv("DEPLOYMENT", "development") == "production":
-        serve(app, host=HOST, port=PORT, debug=DEBUG)  # type: ignore
-    else:
-        socket.run(app=app, host=HOST, port=PORT, debug=DEBUG)  # type: ignore
+    socket.run(app=app, host=HOST, port=PORT, debug=DEBUG)  # type: ignore
