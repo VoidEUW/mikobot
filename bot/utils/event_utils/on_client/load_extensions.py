@@ -1,4 +1,7 @@
-"""MikoBot (c) 2024-2025 by Void"""
+"""Mikotools (c) 2024-2025 by Void
+
+Author: VoidEUW
+"""
 
 from bot.miko import MikoBot
 from bot.api.post_log import log, LogType

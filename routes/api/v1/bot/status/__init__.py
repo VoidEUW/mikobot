@@ -1,3 +1,8 @@
+"""Mikotools (c) 2024-2025 by Void
+
+Author: VoidEUW
+"""
+
 from .start import handle_start  # type: ignore
 from .stop import handle_stop
 from .status import handle_status

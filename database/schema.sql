@@ -1,5 +1,6 @@
 -- This SQL script creates the necessary tables for the application.
 -- MikoBot (c) 2024-2025 by Void
+-- Author: VoidEUW
 
 -- USERS TABLE
 -- This table is used to store user information.

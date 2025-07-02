@@ -1,3 +1,8 @@
+"""Mikotools (c) 2024-2025 by Void
+
+Author: VoidEUW
+"""
+
 from flask_httpauth import HTTPTokenAuth  # type: ignore
 
 from database.connection import connect_database

@@ -1,3 +1,8 @@
+"""Mikotools (c) 2024-2025 by Void
+
+Author: VoidEUW
+"""
+
 import subprocess
 import threading
 from datetime import datetime

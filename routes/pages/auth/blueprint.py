@@ -1,4 +1,7 @@
-"""Mikotools (c) 2024-2025 by Void"""
+"""Mikotools (c) 2024-2025 by Void
+
+Author: VoidEUW
+"""
 
 from flask import Blueprint, request, render_template, redirect, url_for, session
 

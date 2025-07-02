@@ -1,3 +1,8 @@
+"""Mikotools (c) 2024-2025 by Void
+
+Author: VoidEUW
+"""
+
 def connect_database():
     """Connect to the SQLite database."""
     import sqlite3
