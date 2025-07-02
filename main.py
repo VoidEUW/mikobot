@@ -3,7 +3,8 @@
 import os
 
 import eventlet # type: ignore
-eventlet.monkey_patch() # type: ignore
+if os.getenv("DEPLOYMENT", "development") == "production":
+    eventlet.monkey_patch() # type: ignore
 
 from flask_cors import CORS
 

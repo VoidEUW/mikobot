@@ -19,28 +19,31 @@
         <nav class="container">
             <ul>
                 <li>
-                    <img src="{{ url_for('static', filename='assets/users/' + 'generic.jpg') }}"
-                        alt="Miko Logo" style="width: 50px; height: 50px; border-radius: 50%;">
+                    <img src="{{ url_for('static', filename='assets/users/' + 'generic.jpg') }}" alt="Miko Logo"
+                        style="width: 50px; height: 50px; border-radius: 50%;">
                 </li>
-                <li>Welcome {{ user.username }}!</li>
+                <li>{{ user.username }}</li>
             </ul>
             <ul>
                 <li><a href="/dashboard">Home</a></li>
                 <li><a href="/dashboard/users">Users</a></li>
                 <li><a href="/dashboard/tokens">Tokens</a></li>
-                <li><a href="/dashboard/email">Email</a></li>
                 <li><a href="/logout">Logout</a></li>
             </ul>
         </nav>
     </header>
 
     <main class="container">
-        <article style="display: flex; justify-content: start; align-items: center; margin-bottom: 20px; height: 100px;">
+        <article
+            style="display: flex; justify-content: start; align-items: center; margin-bottom: 20px; height: 100px;">
             <button onclick="startBot()" class="secondary" style="margin-right: 10px;">
                 Start
             </button>
-            <button onclick="stopBot()" class="secondary">
+            <button onclick="stopBot()" class="secondary" style="margin-right: 10px;">
                 Stop
+            </button>
+            <button onclick="downloadLogs()" class="secondary">
+                Download Logs
             </button>
             <!-- FIXME Bot status disappears after reload -->
             <pre id="start-status" style="align-items: center; margin: 30px; font-size: small"></pre>
@@ -90,6 +93,21 @@
         terminal.textContent += line;
         terminal.scrollTop = terminal.scrollHeight;
     });
+</script>
+<script>
+    function downloadLogs() {
+        const text = document.getElementById('terminal').textContent;
+        const blob = new Blob([text], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+
+        const date = new Date().toISOString().split('T')[0];
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `${date}-mikobot.log`;
+        a.click();
+
+        URL.revokeObjectURL(url); // Speicher freigeben
+    }
 </script>
 
 </html>
